@@ -13,7 +13,7 @@ function Countries() {
             try {
                 setLoading(true);
                 const response = await fetch(
-                    'https://restcountries.com/v3.1/all?fields=name,flag,population,region,capital'
+                    'https://restcountries.com/v3.1/all?fields=name,flag,population,region,capital,cca3'
                 );
                 
                 if (!response.ok) {
@@ -36,7 +36,9 @@ function Countries() {
                     // capital cities. Some may not have any. So take that into account.
                     capitals: country.capital || [],
                     // The population of the country as a number
-                    population: country.population
+                    population: country.population,
+                    // The 3-letter country code
+                    code: country.cca3
                 }));
                 
                 // Group countries by region

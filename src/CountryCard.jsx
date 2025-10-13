@@ -1,17 +1,16 @@
+import { useNavigate } from 'react-router'
+import { formatNumberWithCommas } from './utils/formatters'
 import './CountryCard.css'
 
-/**
- * Formats a number with commas as thousands separators
- * @param {number} num - The number to format
- * @returns {string} The formatted number string
- */
-function formatNumberWithCommas(num) {
-    return num.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ',');
-}
-
 function CountryCard({ country }) {
+    const navigate = useNavigate();
+
+    const handleClick = () => {
+        navigate(`/country/${country.code}`);
+    };
+
     return (
-        <div className="country-card">
+        <div className="country-card" onClick={handleClick}>
             <div className="country-flag">
                 {country.flag}
             </div>

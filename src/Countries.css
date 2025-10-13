@@ -1,3 +1,37 @@
 .countries {
     padding: 1rem;
 }
+
+@media (min-width: 768px) {
+    .countries {
+        padding: 1rem 2rem;
+    }
+}
+
+.countries-header {
+    margin-bottom: 1.5rem;
+    margin-left: 0.5rem;
+    margin-right: 0.5rem;
+}
+
+.countries-header h2 {
+    margin: 0 0 1rem 0;
+    font-size: 2rem;
+}
+
+.no-results {
+    text-align: center;
+    padding: 3rem 1rem;
+    color: #888888;
+    font-size: 1.2rem;
+}
+
+@media (max-width: 768px) {
+    .countries-header h2 {
+        font-size: 1.5rem;
+    }
+    .countries-header {
+        margin-left: 0;
+        margin-right: 0;
+    }
+}

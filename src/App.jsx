@@ -1,5 +1,6 @@
 import { Routes, Route, Link, useLocation } from 'react-router'
 import { FavoritesProvider, useFavoritesContext } from './context/FavoritesContext'
+import { SearchProvider } from './context/SearchContext'
 import Countries from './Countries'
 import CountryDetail from './CountryDetail'
 import Favorites from './Favorites'
@@ -35,8 +36,12 @@ function AppContent() {
     return (
         <>
             <header className="app-header">
-                <h1>Countries Explorer</h1>
-                <Navigation />
+                <div className="header-left">
+                    <h1>Countries Explorer</h1>
+                </div>
+                <div className="header-right">
+                    <Navigation />
+                </div>
             </header>
             <main className="app-main">
                 <Routes>
@@ -51,9 +56,11 @@ function AppContent() {
 
 function App() {
     return (
-        <FavoritesProvider>
-            <AppContent />
-        </FavoritesProvider>
+        <SearchProvider>
+            <FavoritesProvider>
+                <AppContent />
+            </FavoritesProvider>
+        </SearchProvider>
     );
 }
 

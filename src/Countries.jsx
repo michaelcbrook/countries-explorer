@@ -1,8 +1,11 @@
-import { useState, useEffect } from 'react'
+import { useState, useEffect, useMemo } from 'react'
+import { useSearchContext } from './context/SearchContext'
+import SearchBar from './components/SearchBar'
 import RegionSection from './RegionSection'
 import './Countries.css'
 
 function Countries() {
+    const { searchQuery } = useSearchContext();
     const [countriesByRegion, setCountriesByRegion] = useState({});
     const [loading, setLoading] = useState(true);
     const [error, setError] = useState(null);
@@ -69,6 +72,31 @@ function Countries() {
         fetchCountries();
     }, []);
 
+    // Filter countries based on search query (must be before conditional returns)
+    const filteredCountriesByRegion = useMemo(() => {
+        if (!searchQuery.trim()) {
+            return countriesByRegion;
+        }
+
+        const query = searchQuery.toLowerCase();
+        const filtered = {};
+
+        Object.keys(countriesByRegion).forEach(region => {
+            const matchingCountries = countriesByRegion[region].filter(country =>
+                country.name.common.toLowerCase().includes(query) ||
+                country.name.official.toLowerCase().includes(query) ||
+                country.region.toLowerCase().includes(query) ||
+                (country.capitals && country.capitals.some(cap => cap.toLowerCase().includes(query)))
+            );
+
+            if (matchingCountries.length > 0) {
+                filtered[region] = matchingCountries;
+            }
+        });
+
+        return filtered;
+    }, [countriesByRegion, searchQuery]);
+
     if (loading) {
         return <div className="countries">Loading countries...</div>;
     }
@@ -78,17 +106,27 @@ function Countries() {
     }
 
     // Sort regions alphabetically
-    const sortedRegions = Object.keys(countriesByRegion).sort();
+    const sortedRegions = Object.keys(filteredCountriesByRegion).sort();
 
     return (
         <div className="countries">
-            {sortedRegions.map((region) => (
-                <RegionSection
-                    key={region}
-                    region={region}
-                    countries={countriesByRegion[region]}
-                />
-            ))}
+            <div className="countries-header">
+                <h2>All Countries</h2>
+                <SearchBar />
+            </div>
+            {sortedRegions.length === 0 ? (
+                <div className="no-results">
+                    <p>No countries found matching "{searchQuery}"</p>
+                </div>
+            ) : (
+                sortedRegions.map((region) => (
+                    <RegionSection
+                        key={region}
+                        region={region}
+                        countries={filteredCountriesByRegion[region]}
+                    />
+                ))
+            )}
         </div>
     )
 }

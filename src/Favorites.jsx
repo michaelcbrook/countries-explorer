@@ -1,10 +1,13 @@
-import { useState, useEffect } from 'react';
+import { useState, useEffect, useMemo } from 'react';
 import { useFavoritesContext } from './context/FavoritesContext';
+import { useSearchContext } from './context/SearchContext';
+import SearchBar from './components/SearchBar';
 import CountryCard from './CountryCard';
 import './Favorites.css';
 
 function Favorites() {
     const { favorites, clearFavorites } = useFavoritesContext();
+    const { searchQuery } = useSearchContext();
     const [countries, setCountries] = useState([]);
     const [loading, setLoading] = useState(true);
     const [error, setError] = useState(null);
@@ -53,6 +56,21 @@ function Favorites() {
         fetchFavoriteCountries();
     }, [favorites]);
 
+    // Filter countries based on search query (must be before conditional returns)
+    const filteredCountries = useMemo(() => {
+        if (!searchQuery.trim()) {
+            return countries;
+        }
+
+        const query = searchQuery.toLowerCase();
+        return countries.filter(country =>
+            country.name.common.toLowerCase().includes(query) ||
+            country.name.official.toLowerCase().includes(query) ||
+            country.region.toLowerCase().includes(query) ||
+            (country.capitals && country.capitals.some(cap => cap.toLowerCase().includes(query)))
+        );
+    }, [countries, searchQuery]);
+
     if (loading) {
         return (
             <div className="favorites-container">
@@ -98,8 +116,8 @@ function Favorites() {
 
     return (
         <div className="favorites-container">
-            <div className="favorites-header">
-                <h2>Favorite Countries ({countries.length})</h2>
+            <div className="favorites-title-row">
+                <h2>Favorite Countries ({filteredCountries.length})</h2>
                 <button 
                     className="clear-favorites-button"
                     onClick={clearFavorites}
@@ -108,11 +126,22 @@ function Favorites() {
                     Clear All
                 </button>
             </div>
-            <div className="favorites-grid">
-                {countries.map((country) => (
-                    <CountryCard key={country.code} country={country} />
-                ))}
+            <div className="favorites-search">
+                <SearchBar />
             </div>
+            {filteredCountries.length === 0 ? (
+                <div className="favorites-content">
+                    <div className="no-results">
+                        <p>No favorites found matching "{searchQuery}"</p>
+                    </div>
+                </div>
+            ) : (
+                <div className="favorites-grid">
+                    {filteredCountries.map((country) => (
+                        <CountryCard key={country.code} country={country} />
+                    ))}
+                </div>
+            )}
         </div>
     );
 }

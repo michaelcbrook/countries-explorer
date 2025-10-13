@@ -25,7 +25,8 @@ function Countries() {
                 
                 const data = await response.json();
 
-                console.log(data);
+                // Uncomment this to log the data to the console
+                // console.log(data);
                 
                 // Transform the API response to match our component's expected format
                 const formattedCountries = data.map(country => ({

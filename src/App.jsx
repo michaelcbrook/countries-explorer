@@ -1,6 +1,7 @@
+import { useEffect, useRef } from 'react'
 import { Routes, Route, Link, useLocation } from 'react-router'
 import { FavoritesProvider, useFavoritesContext } from './context/FavoritesContext'
-import { SearchProvider } from './context/SearchContext'
+import { SearchProvider, useSearchContext } from './context/SearchContext'
 import Countries from './Countries'
 import CountryDetail from './CountryDetail'
 import Favorites from './Favorites'
@@ -33,6 +34,23 @@ function Navigation() {
 }
 
 function AppContent() {
+    const location = useLocation();
+    const { clearSearch } = useSearchContext();
+    const prevPathRef = useRef(location.pathname);
+
+    // Clear search when changing routes
+    useEffect(() => {
+        const currentPath = location.pathname;
+        const prevPath = prevPathRef.current;
+
+        // Clear search if the path has changed
+        if (currentPath !== prevPath) {
+            clearSearch();
+        }
+
+        prevPathRef.current = currentPath;
+    }, [location.pathname, clearSearch]);
+
     return (
         <>
             <header className="app-header">

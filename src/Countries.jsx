@@ -1,6 +1,5 @@
 import { useState, useEffect } from 'react'
 import './Countries.css'
-import { Countries as CountriesApi } from '@yusifaliyevpro/countries';
 
 function Countries() {
     const [countries, setCountries] = useState([]);
@@ -8,14 +7,28 @@ function Countries() {
     const [error, setError] = useState(null);
 
     useEffect(() => {
-        // Fetch all countries with specific fields
+        // Fetch all countries from REST Countries API
         async function fetchCountries() {
             try {
                 setLoading(true);
-                const data = await CountriesApi.getCountries({
-                    fields: ["name", "capital"],
-                });
-                setCountries(data);
+                const response = await fetch(
+                    'https://restcountries.com/v3.1/all?fields=name,capital,population'
+                );
+                
+                if (!response.ok) {
+                    throw new Error('Failed to fetch countries');
+                }
+                
+                const data = await response.json();
+                
+                // Transform the API response to match our component's expected format
+                const formattedCountries = data.map(country => ({
+                    name: country.name.common,
+                    capital: country.capital ? country.capital[0] : 'N/A',
+                    population: country.population
+                }));
+                
+                setCountries(formattedCountries);
             } catch (err) {
                 setError(err.message);
             } finally {

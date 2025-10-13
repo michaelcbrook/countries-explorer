@@ -1,0 +1,84 @@
+.favorites-container {
+    padding: 1.5rem;
+}
+
+.favorites-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 2rem;
+    flex-wrap: wrap;
+    gap: 1rem;
+}
+
+.favorites-header h2 {
+    margin: 0;
+    font-size: 1.5rem;
+}
+
+.clear-favorites-button {
+    background-color: #ff6b6b;
+    border: 1px solid #ff5252;
+    color: #ffffff;
+    padding: 0.75rem 1.5rem;
+    border-radius: 0.5rem;
+    cursor: pointer;
+    font-size: 1rem;
+    transition: all 0.2s ease;
+}
+
+.clear-favorites-button:hover {
+    background-color: #ff5252;
+    border-color: #ff3838;
+}
+
+.clear-favorites-button:focus-visible {
+    outline: 2px solid #646cff;
+    outline-offset: 2px;
+}
+
+.favorites-content {
+    text-align: center;
+    padding: 2rem;
+}
+
+.favorites-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+    gap: 1rem;
+}
+
+.empty-favorites {
+    max-width: 500px;
+    margin: 0 auto;
+    padding: 3rem 1rem;
+}
+
+.empty-icon {
+    font-size: 5rem;
+    margin: 0 0 1rem 0;
+}
+
+.empty-message {
+    font-size: 1.5rem;
+    margin: 0 0 1rem 0;
+    color: #ffffff;
+}
+
+.empty-hint {
+    font-size: 1rem;
+    color: #888888;
+    margin: 0;
+}
+
+.error-message {
+    color: #ff6b6b;
+    font-size: 1.2rem;
+}
+
+@media (max-width: 768px) {
+    .favorites-grid {
+        grid-template-columns: 1fr;
+    }
+}
+

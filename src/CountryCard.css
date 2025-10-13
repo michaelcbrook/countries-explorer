@@ -1,10 +1,11 @@
 .country-card {
+    position: relative;
     display: flex;
     flex-direction: row;
     align-items: center;
     padding: 1rem;
     border: 1px solid #444444;
-    background-color: #242424;
+    background-color: #1b1b1b;
     border-radius: 0.5rem;
     box-shadow: 0 0 10px 0 rgba(0, 0, 0, 0.1);
     transition: all 0.2s ease;
@@ -14,7 +15,7 @@
 .country-card:hover,
 .country-card:focus-visible {
     border: 1px solid #5d5d5d;
-    background-color: #313131;
+    background-color: #242424;
     box-shadow: 0 0 10px 0 rgba(0, 0, 0, 0.5);
     outline: none;
 }
@@ -22,6 +23,58 @@
 .country-card:focus-visible {
     outline: 2px solid #646cff;
     outline-offset: 2px;
+}
+
+.favorite-button {
+    position: absolute;
+    top: 0.5rem;
+    right: 0.5rem;
+    background: rgba(36, 36, 36, 0.9);
+    border: 1px solid #444444;
+    color: #888888;
+    font-size: 1.5rem;
+    width: 2.5rem;
+    height: 2.5rem;
+    border-radius: 0.25rem;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    transition: all 0.2s ease;
+    z-index: 10;
+    opacity: 0;
+    pointer-events: none;
+}
+
+/* Show favorite button on card hover/focus */
+.country-card:hover .favorite-button,
+.country-card:focus-within .favorite-button {
+    opacity: 1;
+    pointer-events: auto;
+}
+
+.favorite-button:hover {
+    background: rgba(36, 36, 36, 1);
+    border-color: #646cff;
+    color: #ffd700;
+    transform: scale(1.1);
+}
+
+.favorite-button:focus-visible {
+    outline: 2px solid #646cff;
+    outline-offset: 2px;
+}
+
+.favorite-button.favorited {
+    color: #ffd700;
+    border-color: #ffd700;
+    opacity: 1;
+    pointer-events: auto;
+}
+
+.favorite-button.favorited:hover {
+    color: #ffed4e;
+    border-color: #ffed4e;
 }
 
 .country-card .country-flag {

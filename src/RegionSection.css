@@ -15,13 +15,19 @@
 .region-header {
     position: sticky;
     top: 0;
-    background-color: #242424;
+    background-color: #1b1b1b;
     z-index: 100;
     padding: 1rem;
     transition: all 0.2s ease;
     user-select: none;
     cursor: pointer;
     border-radius: 0.5rem;
+}
+
+@media (min-width: 600px) {
+    .region-header {
+        background-color: #242424;
+    }
 }
 
 .region-header:hover {

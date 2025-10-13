@@ -1,11 +1,14 @@
 import { useState, useEffect } from 'react'
 import { useParams, useNavigate } from 'react-router'
+import { useFavoritesContext } from './context/FavoritesContext'
 import { formatNumberWithCommas } from './utils/formatters'
 import './CountryDetail.css'
 
 function CountryDetail() {
     const { code } = useParams();
     const navigate = useNavigate();
+    const { toggleFavorite, isFavorite } = useFavoritesContext();
+    const favorited = isFavorite(code);
     const [country, setCountry] = useState(null);
     const [loading, setLoading] = useState(true);
     const [error, setError] = useState(null);
@@ -55,9 +58,19 @@ function CountryDetail() {
 
     return (
         <div className="country-detail-container">
-            <button onClick={() => navigate('/')} className="back-button">
-                ← Back to Countries
-            </button>
+            <div className="detail-actions">
+                <button onClick={() => navigate('/')} className="back-button">
+                    ← Back to Countries
+                </button>
+                <button 
+                    onClick={() => toggleFavorite(code)} 
+                    className={`favorite-detail-button ${favorited ? 'favorited' : ''}`}
+                    aria-label={favorited ? 'Remove from favorites' : 'Add to favorites'}
+                >
+                    <span className="favorite-icon">{favorited ? '★' : '☆'}</span>
+                    <span className="favorite-text">{favorited ? 'Remove from Favorites' : 'Add to Favorites'}</span>
+                </button>
+            </div>
 
             <div className="country-detail">
                 <div className="country-detail-header">

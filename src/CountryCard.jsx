@@ -1,9 +1,12 @@
 import { useNavigate } from 'react-router'
+import { useFavoritesContext } from './context/FavoritesContext'
 import { formatNumberWithCommas } from './utils/formatters'
 import './CountryCard.css'
 
 function CountryCard({ country }) {
     const navigate = useNavigate();
+    const { toggleFavorite, isFavorite } = useFavoritesContext();
+    const favorited = isFavorite(country.code);
 
     const handleClick = () => {
         navigate(`/country/${country.code}`);
@@ -17,6 +20,19 @@ function CountryCard({ country }) {
         }
     };
 
+    const handleFavoriteClick = (e) => {
+        e.stopPropagation(); // Prevent card navigation
+        toggleFavorite(country.code);
+    };
+
+    const handleFavoriteKeyDown = (e) => {
+        if (e.key === 'Enter' || e.key === ' ') {
+            e.preventDefault();
+            e.stopPropagation();
+            toggleFavorite(country.code);
+        }
+    };
+
     return (
         <div 
             className="country-card" 
@@ -26,6 +42,15 @@ function CountryCard({ country }) {
             tabIndex={0}
             aria-label={`View details for ${country.name.common}`}
         >
+            <button
+                className={`favorite-button ${favorited ? 'favorited' : ''}`}
+                onClick={handleFavoriteClick}
+                onKeyDown={handleFavoriteKeyDown}
+                aria-label={favorited ? 'Remove from favorites' : 'Add to favorites'}
+                title={favorited ? 'Remove from favorites' : 'Add to favorites'}
+            >
+                {favorited ? '★' : '☆'}
+            </button>
             <div className="country-flag">
                 {country.flag}
             </div>

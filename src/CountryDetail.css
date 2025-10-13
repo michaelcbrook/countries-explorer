@@ -4,7 +4,15 @@
     padding: 2rem;
 }
 
-.back-button {
+.detail-actions {
+    display: flex;
+    gap: 1rem;
+    margin-bottom: 2rem;
+    flex-wrap: wrap;
+}
+
+.back-button,
+.favorite-detail-button {
     background-color: #1a1a1a;
     border: 1px solid #444444;
     color: #ffffff;
@@ -13,17 +21,41 @@
     cursor: pointer;
     font-size: 1rem;
     transition: all 0.2s ease;
-    margin-bottom: 2rem;
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
 }
 
-.back-button:hover {
+.favorite-icon {
+    font-size: 1.2rem;
+}
+
+.favorite-text {
+    display: inline;
+}
+
+.back-button:hover,
+.favorite-detail-button:hover {
     background-color: #313131;
     border-color: #5d5d5d;
 }
 
-.back-button:focus-visible {
+.back-button:focus-visible,
+.favorite-detail-button:focus-visible {
     outline: 2px solid #646cff;
     outline-offset: 2px;
+}
+
+.favorite-detail-button.favorited {
+    background-color: #2a2a1a;
+    border-color: #ffd700;
+    color: #ffd700;
+}
+
+.favorite-detail-button.favorited:hover {
+    background-color: #3a3a1a;
+    border-color: #ffed4e;
+    color: #ffed4e;
 }
 
 .country-detail {
@@ -184,6 +216,22 @@
     .country-coat-of-arms-image {
         padding: 0.5rem;
         max-height: 200px;
+    }
+}
+
+@media (max-width: 500px) {
+    .favorite-text {
+        display: none;
+    }
+
+    .favorite-detail-button {
+        padding: 0.75rem;
+        min-width: 3rem;
+        justify-content: center;
+    }
+
+    .favorite-icon {
+        font-size: 1.5rem;
     }
 }
 

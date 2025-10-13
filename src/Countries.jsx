@@ -1,17 +1,9 @@
 import { useState, useEffect } from 'react'
+import RegionSection from './RegionSection'
 import './Countries.css'
 
-/**
- * Formats a number with commas as thousands separators
- * @param {number} num - The number to format
- * @returns {string} The formatted number string
- */
-function formatNumberWithCommas(num) {
-    return num.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ',');
-}
-
 function Countries() {
-    const [countries, setCountries] = useState([]);
+    const [countriesByRegion, setCountriesByRegion] = useState({});
     const [loading, setLoading] = useState(true);
     const [error, setError] = useState(null);
 
@@ -42,12 +34,29 @@ function Countries() {
                     region: country.region,
                     // Array of capital cities as strings. Some countries may have multiple
                     // capital cities. Some may not have any. So take that into account.
-                    capitals: country.capital,
+                    capitals: country.capital || [],
                     // The population of the country as a number
                     population: country.population
                 }));
                 
-                setCountries(formattedCountries);
+                // Group countries by region
+                const grouped = formattedCountries.reduce((acc, country) => {
+                    const region = country.region || 'Other';
+                    if (!acc[region]) {
+                        acc[region] = [];
+                    }
+                    acc[region].push(country);
+                    return acc;
+                }, {});
+                
+                // Sort countries within each region alphabetically by name
+                Object.keys(grouped).forEach(region => {
+                    grouped[region].sort((a, b) => 
+                        a.name.common.localeCompare(b.name.common)
+                    );
+                });
+                
+                setCountriesByRegion(grouped);
             } catch (err) {
                 setError(err.message);
             } finally {
@@ -66,31 +75,18 @@ function Countries() {
         return <div className="countries">Error: {error}</div>;
     }
 
+    // Sort regions alphabetically
+    const sortedRegions = Object.keys(countriesByRegion).sort();
+
     return (
         <div className="countries">
-            <div className="countries-list">
-                {countries.map((country, index) => (
-                    <div key={index} className="country">
-                        <div className="country-flag">
-                            {country.flag}
-                        </div>
-                        <div className="country-details">
-                            <div className="country-name">{country.name.common}</div>
-                            <div className="country-region">Region: {country.region}</div>
-                            <div className="country-capitals">
-                                {country.capitals.length===0 ?
-                                    'Capital: N/A'
-                                : country.capitals.length > 1 ?
-                                    `Capitals: ${country.capitals.join(', ')}`
-                                :
-                                    `Capital: ${country.capitals[0]}`
-                                }
-                            </div>
-                            <div className="country-population">Population: {formatNumberWithCommas(country.population)}</div>
-                        </div>
-                    </div>
-                ))}
-            </div>
+            {sortedRegions.map((region) => (
+                <RegionSection
+                    key={region}
+                    region={region}
+                    countries={countriesByRegion[region]}
+                />
+            ))}
         </div>
     )
 }

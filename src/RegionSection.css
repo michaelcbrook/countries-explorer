@@ -1,0 +1,75 @@
+.region-section {
+    margin-bottom: 1rem;
+}
+
+@media (min-width: 600px) {
+    .region-section {
+        border: 1px solid #444444;
+        background-color: #242424;
+        border-radius: 0.5rem;
+        padding: 1rem;
+        box-shadow: 0 0 10px 0 rgba(0, 0, 0, 0.1);
+    }
+}
+
+.region-header {
+    position: sticky;
+    top: 0;
+    background-color: #242424;
+    z-index: 100;
+    padding: 1rem;
+    transition: all 0.2s ease;
+    user-select: none;
+    cursor: pointer;
+    border-radius: 0.5rem;
+}
+
+.region-header:hover,
+.region-header:focus-visible {
+    background-color: #313131;
+}
+
+.region-title {
+    margin: 0;
+    font-size: 1.5rem;
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+}
+
+.region-arrow {
+    display: inline-block;
+    transition: transform 0.3s ease;
+    font-size: 0.8rem;
+}
+
+.region-arrow.expanded {
+    transform: rotate(90deg);
+}
+
+.region-count {
+    font-size: 1rem;
+    color: #888888;
+    font-weight: normal;
+    margin-left: 0.5rem;
+}
+
+.region-countries {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+    gap: 1rem;
+    padding: 1rem 0;
+    animation: slideDown 0.3s ease;
+}
+
+@keyframes slideDown {
+    from {
+        opacity: 0;
+        transform: translateY(-10px);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+

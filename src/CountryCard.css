@@ -1,0 +1,43 @@
+.country-card {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    padding: 1rem;
+    border: 1px solid #444444;
+    background-color: #242424;
+    border-radius: 0.5rem;
+    box-shadow: 0 0 10px 0 rgba(0, 0, 0, 0.1);
+    transition: all 0.2s ease;
+    cursor: pointer;
+}
+
+.country-card:hover,
+.country-card:focus-visible {
+    border: 1px solid #5d5d5d;
+    background-color: #313131;
+    box-shadow: 0 0 10px 0 rgba(0, 0, 0, 0.5);
+}
+
+.country-card .country-flag {
+    font-size: 2rem;
+}
+
+.country-card .country-details {
+    flex-grow: 1;
+    padding-left: 1rem;
+    text-align: left;
+}
+
+.country-card .country-details .country-name {
+    font-weight: bold;
+    margin-bottom: 0.1rem;
+}
+
+.country-card .country-details .country-region,
+.country-card .country-details .country-capitals,
+.country-card .country-details .country-population {
+    font-size: 0.8rem;
+    font-weight: normal;
+    color: #888888;
+}
+

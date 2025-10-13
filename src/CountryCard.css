@@ -100,3 +100,11 @@
     color: #888888;
 }
 
+/* Always show favorite button on mobile/touch devices */
+@media (max-width: 768px) {
+    .favorite-button {
+        opacity: 1;
+        pointer-events: auto;
+    }
+}
+

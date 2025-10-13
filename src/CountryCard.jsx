@@ -9,8 +9,23 @@ function CountryCard({ country }) {
         navigate(`/country/${country.code}`);
     };
 
+    const handleKeyDown = (e) => {
+        // Navigate on Enter or Space key
+        if (e.key === 'Enter' || e.key === ' ') {
+            e.preventDefault();
+            navigate(`/country/${country.code}`);
+        }
+    };
+
     return (
-        <div className="country-card" onClick={handleClick}>
+        <div 
+            className="country-card" 
+            onClick={handleClick}
+            onKeyDown={handleKeyDown}
+            role="button"
+            tabIndex={0}
+            aria-label={`View details for ${country.name.common}`}
+        >
             <div className="country-flag">
                 {country.flag}
             </div>

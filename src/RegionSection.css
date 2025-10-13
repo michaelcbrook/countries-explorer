@@ -24,9 +24,14 @@
     border-radius: 0.5rem;
 }
 
-.region-header:hover,
+.region-header:hover {
+    background-color: #313131;
+}
+
 .region-header:focus-visible {
     background-color: #313131;
+    outline: 2px solid #646cff;
+    outline-offset: 2px;
 }
 
 .region-title {

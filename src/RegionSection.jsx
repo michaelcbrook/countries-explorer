@@ -9,9 +9,26 @@ function RegionSection({ region, countries }) {
         setIsExpanded(!isExpanded);
     };
 
+    const handleKeyDown = (e) => {
+        // Toggle on Enter or Space key
+        if (e.key === 'Enter' || e.key === ' ') {
+            e.preventDefault();
+            toggleExpanded();
+        }
+    };
+
     return (
         <div className="region-section">
-            <div className="region-header" onClick={toggleExpanded}>
+            <div 
+                className="region-header" 
+                onClick={toggleExpanded}
+                onKeyDown={handleKeyDown}
+                role="button"
+                tabIndex={0}
+                aria-expanded={isExpanded}
+                aria-controls={`region-${region}-content`}
+                aria-label={`${isExpanded ? 'Collapse' : 'Expand'} ${region} region`}
+            >
                 <h2 className="region-title">
                     <span className={`region-arrow ${isExpanded ? 'expanded' : ''}`}>▶</span>
                     {region}
@@ -20,7 +37,12 @@ function RegionSection({ region, countries }) {
             </div>
             
             {isExpanded && (
-                <div className="region-countries">
+                <div 
+                    className="region-countries"
+                    id={`region-${region}-content`}
+                    role="region"
+                    aria-label={`${region} countries`}
+                >
                     {countries.map((country, index) => (
                         <CountryCard key={index} country={country} />
                     ))}

@@ -21,6 +21,11 @@
     border-color: #5d5d5d;
 }
 
+.back-button:focus-visible {
+    outline: 2px solid #646cff;
+    outline-offset: 2px;
+}
+
 .country-detail {
     background-color: #242424;
     border: 1px solid #444444;
@@ -123,6 +128,11 @@
 .border-country-button:hover {
     background-color: #3a3a3a;
     border-color: #5d5d5d;
+}
+
+.border-country-button:focus-visible {
+    outline: 2px solid #646cff;
+    outline-offset: 2px;
 }
 
 .no-borders {

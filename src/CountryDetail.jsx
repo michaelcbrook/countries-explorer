@@ -81,7 +81,7 @@ function CountryDetail() {
                     )}
                     {country.name.nativeName && (
                         <p className="country-detail-native">
-                            Native: {Object.values(country.name.nativeName).map(n => n.common).join(', ')}
+                            Native: {Object.values(country.name.nativeName).length > 0 ? Object.values(country.name.nativeName).map(n => n.common).join(', ') : 'N/A'}
                         </p>
                     )}
                 </div>
@@ -101,7 +101,7 @@ function CountryDetail() {
                             <div className="detail-item">
                                 <span className="detail-label">Capital:</span>
                                 <span className="detail-value">
-                                    {country.capital ? country.capital.join(', ') : 'N/A'}
+                                    {country.capital && country.capital.length > 0 ? country.capital.join(', ') : 'N/A'}
                                 </span>
                             </div>
                             <div className="detail-item">
@@ -119,7 +119,7 @@ function CountryDetail() {
                             <div className="detail-item">
                                 <span className="detail-label">Timezones:</span>
                                 <span className="detail-value">
-                                    {country.timezones ? country.timezones.join(', ') : 'N/A'}
+                                    {country.timezones && country.timezones.length > 0 ? country.timezones.join(', ') : 'N/A'}
                                 </span>
                             </div>
                         </div>
@@ -131,7 +131,7 @@ function CountryDetail() {
                             <div className="detail-item">
                                 <span className="detail-label">Native Name:</span>
                                 <span className="detail-value">
-                                    {country.name.nativeName 
+                                    {country.name.nativeName && Object.values(country.name.nativeName).length > 0
                                         ? Object.values(country.name.nativeName).map(n => n.common).join(', ')
                                         : 'N/A'}
                                 </span>
@@ -139,13 +139,13 @@ function CountryDetail() {
                             <div className="detail-item">
                                 <span className="detail-label">Languages:</span>
                                 <span className="detail-value">
-                                    {country.languages ? Object.values(country.languages).join(', ') : 'N/A'}
+                                    {country.languages && Object.values(country.languages).length > 0 ? Object.values(country.languages).join(', ') : 'N/A'}
                                 </span>
                             </div>
                             <div className="detail-item">
                                 <span className="detail-label">Currencies:</span>
                                 <span className="detail-value">
-                                    {country.currencies 
+                                    {country.currencies && Object.values(country.currencies).length > 0
                                         ? Object.values(country.currencies)
                                             .map(curr => `${curr.name} (${curr.symbol})`)
                                             .join(', ')
@@ -177,7 +177,7 @@ function CountryDetail() {
                     <div className="detail-section">
                         <h2>Other Details</h2>
                         <div className="detail-grid">
-                            {country.continents && (
+                            {country.continents && country.continents.length > 0 && (
                                 <div className="detail-item">
                                     <span className="detail-label">Continents:</span>
                                     <span className="detail-value">{country.continents.join(', ')}</span>
@@ -189,7 +189,7 @@ function CountryDetail() {
                                     {country.cca2} / {country.cca3} / {country.ccn3}
                                 </span>
                             </div>
-                            {country.tld && (
+                            {country.tld && country.tld.length > 0 && (
                                 <div className="detail-item">
                                     <span className="detail-label">Top Level Domain:</span>
                                     <span className="detail-value">{country.tld.join(', ')}</span>
